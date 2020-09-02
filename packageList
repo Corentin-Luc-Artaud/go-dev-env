@@ -1,0 +1,16 @@
+bash
+bash-completion
+git
+openssh-client
+less
+grep
+iproute2
+curl
+wget
+unzip
+jq
+ca-certificates
+dialog
+gzip
+sudo
+upx
