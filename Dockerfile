@@ -17,7 +17,7 @@ RUN apk update && \
     adduser -D -u ${USER_UID} ${USERNAME} && \
     adduser $USERNAME wheel && \
     sed -e 's;^# \(%wheel.*NOPASSWD.*\);\1;g' -i /etc/sudoers && \
-    cp /temp/.bashrc /home/$USERNAME/.bashrc && chown $USERNAME /home/$USERNAME/.bashrc
+    cp /tmp/.bashrc /home/$USERNAME/.bashrc && chown $USERNAME /home/$USERNAME/.bashrc
 
 # Install Go tools
 ARG GO_TOOLS_WITH_MODULES="\
