@@ -3,19 +3,21 @@ ARG VARIANT=1.15.1-alpine3.12
 FROM golang:${VARIANT}
 
 # Options for setup script
-ARG INSTALL_ZSH="true"
 ARG UPGRADE_PACKAGES="false"
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-# Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 COPY packageList /tmp/packageList
+COPY .bashrc /tmp/.bashrc
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies. Setup non root user
-RUN adduser -D -u ${USER_UID} ${USERNAME} && \
-    apk update && \
-    apk add $(cat /tmp/packageList) 
+RUN apk update && \
+    apk add $(cat /tmp/packageList) && \
+    adduser -D -u ${USER_UID} ${USERNAME} && \
+    adduser $USERNAME wheel && \
+    sed -e 's;^# \(%wheel.*NOPASSWD.*\);\1;g' -i /etc/sudoers && \
+    cp /temp/.bashrc /home/$USERNAME/.bashrc && chown $USERNAME /home/$USERNAME/.bashrc
 
 # Install Go tools
 ARG GO_TOOLS_WITH_MODULES="\

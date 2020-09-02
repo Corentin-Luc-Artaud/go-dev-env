@@ -14,3 +14,7 @@ dialog
 gzip
 sudo
 upx
+gcc
+g++
+libstdc++6
+libgcc
